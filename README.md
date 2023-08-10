@@ -29,7 +29,15 @@ make prob_num=0 deploy
 
 ## SSH into instance
 
-First, generate an SSH key
+First, set up an AWS CLI profile that will assume the SSH role:
+
+```
+make setup-aws-profile
+```
+
+This is designed to work with IAM Identity Center SSO credentials. It will ask for the `Source Profile` that has permission to assume the SSH role.
+
+Next, generate an SSH key
 
 ```
 make gen-ssh-key

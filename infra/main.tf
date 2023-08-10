@@ -79,7 +79,7 @@ resource "aws_vpc_security_group_egress_rule" "protohacker_solutions_outbound_ru
   cidr_ipv4   = "0.0.0.0/0"
 }
 
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "amazon_linux_arm" {
   most_recent = true
   owners      = ["amazon"]
 
@@ -91,6 +91,27 @@ data "aws_ami" "amazon_linux" {
   filter {
     name   = "architecture"
     values = ["arm64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+}
+
+data "aws_ami" "amazon_linux_x86" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
 
   filter {
@@ -116,6 +137,25 @@ resource "aws_iam_role" "protohacker_solutions_ec2" {
       }
     ]
   })
+
+  inline_policy {
+    name = "protohacker-download-problem-binary"
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = [
+            "s3:HeadObject",
+            "s3:GetObject"
+          ]
+          Effect = "Allow"
+          Resource = [
+            "arn:aws:s3:::protohacker-solutions/*"
+          ]
+        }
+      ]
+    })
+  }
 }
 
 resource "aws_iam_instance_profile" "protohacker_solutions_instance_profile" {
@@ -123,10 +163,10 @@ resource "aws_iam_instance_profile" "protohacker_solutions_instance_profile" {
   role = aws_iam_role.protohacker_solutions_ec2.name
 }
 resource "aws_instance" "protohacker_solutions" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t4g.nano"
+  ami           = data.aws_ami.amazon_linux_x86.id
+  instance_type = "t3.nano"
   subnet_id     = aws_subnet.protohacker_solutions_public.id
-  security_groups = [
+  vpc_security_group_ids = [
     aws_security_group.protohacker_solutions.id
   ]
   iam_instance_profile = aws_iam_instance_profile.protohacker_solutions_instance_profile.name

@@ -1,4 +1,4 @@
-FROM amazonlinux:latest
+FROM amazonlinux:2023
 
 RUN yum install -y /usr/sbin/adduser tar gzip unzip sudo
 RUN useradd -ms /bin/bash ec2-user

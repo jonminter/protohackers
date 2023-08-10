@@ -62,3 +62,6 @@ deploy:
 
 telnet:
 	telnet $(shell ./infra/scripts/instance.sh ip) 10000
+
+submit:
+	open https://protohackers.com/problem/$(prob_num)

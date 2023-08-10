@@ -26,6 +26,7 @@ tf-apply:
 	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform apply -var-file=vars.tfvars
 tf-destroy:
+	AWS_REGION=us-east-1 aws s3 rm s3://protohacker-solutions --recursive
 	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform destroy -var-file=vars.tfvars
 

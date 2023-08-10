@@ -25,6 +25,9 @@ tf-plan:
 tf-apply:
 	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform apply -var-file=vars.tfvars
+tf-destroy:
+	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
+	cd $(INFRA_DIR) && terraform destroy -var-file=vars.tfvars
 
 install-colima:
 	# download binary

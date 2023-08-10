@@ -20,10 +20,10 @@ run-docker:
 
 INFRA_DIR=infra
 tf-plan:
-	cd $(INFRA_DIR) && ./create_tfvars.sh
+	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform plan -var-file=vars.tfvars
 tf-apply:
-	cd $(INFRA_DIR) && ./create_tfvars.sh
+	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform apply -var-file=vars.tfvars
 
 install-colima:
@@ -41,7 +41,7 @@ instance-ip:
 setup-aws-profile:
 	./infra/scripts/setup_aws_profile.sh
 
-PROBLEM_DIR=problem$(prob_num)_smoketest
+PROBLEM_DIR=problem$(prob_num)
 test:
 	cd $(PROBLEM_DIR) && cargo test
 fmt:
@@ -58,7 +58,7 @@ build-debug:
 build-arm:
 	cd $(PROBLEM_DIR) && cross build --release --target aarch64-unknown-linux-gnu
 deploy:
-	cd $(PROBLEM_DIR) && aws s3 cp target/release/problem0_smoketest s3://protohacker-solutions/problem0_smoketest
+	cd $(PROBLEM_DIR) && aws s3 cp target/release/problem$(prob_num) s3://protohacker-solutions/problem$(prob_num)
 
 telnet:
 	telnet $(shell ./infra/scripts/instance.sh ip) 10000

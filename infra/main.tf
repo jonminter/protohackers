@@ -171,7 +171,7 @@ resource "aws_instance" "protohacker_solutions" {
   ]
   iam_instance_profile = aws_iam_instance_profile.protohacker_solutions_instance_profile.name
 
-  user_data = file("setup_host.sh")
+  user_data = file("assets/setup_host.sh")
 
   tags = {
     App = "protohacker-solutions"

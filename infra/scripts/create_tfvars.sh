@@ -7,7 +7,7 @@ if [ ! -f vars.tfvars ]; then
     echo "vars.tfvars not found. Creating..."
     cat <<EOF > vars.tfvars
 my_ip_address=${MY_IP_ADDRESS}
-sso_role_name=${SSO_ROLE_NAME}
+sso_role_name="${SSO_ROLE_NAME}"
 EOF
     echo "vars.tfvars created."
 else

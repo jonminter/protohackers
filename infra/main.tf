@@ -1,6 +1,6 @@
 provider "aws" {
   shared_credentials_files = ["~/.aws/credentials"]
-  region                   = "us-east-1"
+  region                   = "eu-west-2"
 }
 
 resource "aws_vpc" "protohacker_solutions" {
@@ -14,7 +14,7 @@ resource "aws_vpc" "protohacker_solutions" {
 resource "aws_subnet" "protohacker_solutions_public" {
   vpc_id            = aws_vpc.protohacker_solutions.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "eu-west-2a"
 }
 
 resource "aws_internet_gateway" "protohacker_solutions" {
@@ -212,7 +212,7 @@ resource "aws_iam_role" "protohacker_solutions_ssh" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          AWS = "arn:aws:sts::${data.aws_caller_identity.current.account_id}:assumed-role/${var.sso_role_name}"
+          AWS = "${var.sso_role_name}"
         }
       }
     ]

@@ -70,6 +70,15 @@ resource "aws_vpc_security_group_ingress_rule" "protohacker_solutions_problem0_r
   cidr_ipv4   = "0.0.0.0/0"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "protohacker_solutions_problem0_rule" {
+  security_group_id = aws_security_group.protohacker_solutions.id
+
+  description = "Problem 1: Prime Time"
+  from_port   = 10001
+  to_port     = 10001
+  ip_protocol = "tcp"
+  cidr_ipv4   = "0.0.0.0/0"
+}
 
 resource "aws_vpc_security_group_egress_rule" "protohacker_solutions_outbound_rule" {
   security_group_id = aws_security_group.protohacker_solutions.id

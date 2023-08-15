@@ -1,0 +1,11 @@
+[Unit]
+Description=Protohacker Problem 1: Prime Time
+
+[Service]
+User=protohackers
+Environment="BIND_ADDR=0.0.0.0"
+ExecStart=/opt/protohacker/protohacker1
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s

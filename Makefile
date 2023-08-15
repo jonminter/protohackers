@@ -38,7 +38,7 @@ tf-destroy:
 tf-recreate-ec2:
 	cd $(INFRA_DIR) && ./scripts/create_tfvars.sh
 	cd $(INFRA_DIR) && terraform destroy -var-file=vars.tfvars -target=aws_instance.protohacker_solutions
-	cd $(INFRA_DIR) && terraform apply -var-file=vars.tfvars -target=aws_instance.protohacker_solutions
+	cd $(INFRA_DIR) && terraform apply -var-file=vars.tfvars -target=aws_instance.protohacker_solutions -target=aws_iam_role.protohacker_solutions_ssh --target=aws_eip_association.protohacker_solutions_instance
 
 install-colima:
 	# download binary

@@ -152,7 +152,17 @@ resource "aws_iam_role" "protohacker_solutions_ec2" {
           Resource = [
             "arn:aws:s3:::protohacker-solutions/*"
           ]
+        },
+        {
+          Action = [
+            "s3:PutObject"
+          ]
+          Effect = "Allow"
+          Resource = [
+            "arn:aws:s3:::protohacker-solutions/deploy-logs/*"
+          ]
         }
+
       ]
     })
   }
